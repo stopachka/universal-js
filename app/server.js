@@ -29,6 +29,7 @@ function templ(body) {
       </head>
       <body>
         <div class="react-root">${body}</div>
+        <script src="static/client.js"></script>
       </body>
     </html>
   `;
