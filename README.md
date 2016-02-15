@@ -1,3 +1,3 @@
 ## blog
 
-The blog that powers [stepanp.com](www.stepanp.com)
+The blog that powers [stepanp.com](http://stepanp.com)
