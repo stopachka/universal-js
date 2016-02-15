@@ -29,8 +29,8 @@ const CLIENT_CONFIG = {
   ...BASE_CONFIG,
   entry: './app/client.js',
   output: {
-    path: path.join(__dirname, 'app/client'),
-    publicPath: 'http://localhost:5000/build/',
+    path: path.join(__dirname, 'build/static'),
+    publicPath: 'http://localhost:5000/static/',
     filename: 'client.js'
   },
 };
@@ -62,8 +62,12 @@ const SERVER_CONFIG = {
 // ------------------------------------------------------------
 // Tasks
 
-gulp.task('backend-build', done => {
+gulp.task('server-build', done => {
   webpack(SERVER_CONFIG).run(cb(done));
+});
+
+gulp.task('frontend-build', done => {
+  webpack(CLIENT_CONFIG).run(cb(done));
 });
 
 gulp.task('backend-watch', done => {
