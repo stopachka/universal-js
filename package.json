@@ -2,6 +2,9 @@
   "name": "universal-js",
   "version": "0.0.1",
   "author": "stopachka",
+  "scripts": {
+    "start": "gulp backend-build && node build/backend.js"
+  },
   "dependencies": {
     "babel-plugin-transform-react-jsx": "^6.5.2",
     "react": "0.14.7",
