@@ -5,6 +5,11 @@ import fs from 'fs';
 import _ from 'lodash';
 import nodemon from 'nodemon';
 
+const BABEL_OPTS = JSON.parse(fs.readFileSync('.babelrc'));
+
+// ------------------------------------------------------------
+// Webpack Configs
+
 const NODE_MODULES = fs.readdirSync('node_modules')
   .filter(dir => dir !== '.bin')
   .reduce(
@@ -16,12 +21,23 @@ const NODE_MODULES = fs.readdirSync('node_modules')
   )
 ;
 
+
 const CONFIG = {
-  entry: './src/main.js',
+  entry: './src/server/main.js',
   target: 'node',
   output: {
     path: path.join(__dirname, 'build'),
     filename: 'backend.js',
+  },
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel',
+        query: BABEL_OPTS,
+      },
+    ],
   },
   externals: NODE_MODULES,
 };
@@ -41,15 +57,13 @@ gulp.task('backend-watch', done => {
   });
 });
 
-gulp.task('run', ['backend-watch'], () => {
+gulp.task('default', ['backend-watch'], () => {
   nodemon({
     execMap: {
-      js: 'node'
+      js: 'node',
     },
     script: path.join(__dirname, 'build/backend'),
-  }).on('restart', function() {
-    console.log('[nodemon] restart');
-  });
+  }).on('restart', () => console.log('[nodemon] restart'));
 });
 
 const cb = done => (err, stats) => {
