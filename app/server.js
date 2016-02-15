@@ -6,7 +6,10 @@ import {RouterContext, match} from 'react-router';
 import React from 'react';
 
 const app = express();
-app.use('/static', express.static('build/static'));
+
+app.use('/client.js', (req, res) => {
+  res.sendFile('client.js', {root: 'build'});
+});
 
 app.get('/:params?*', (req, res) => {
   match({routes, location: req.url}, (err, redirect, props) => {
@@ -29,7 +32,7 @@ function templ(body) {
       </head>
       <body>
         <div class="react-root">${body}</div>
-        <script src="static/client.js"></script>
+        <script src="client.js"></script>
       </body>
     </html>
   `;

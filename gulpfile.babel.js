@@ -26,7 +26,7 @@ gulp.task('client-build', done => {
 
 gulp.task('client-watch', done => {
   const doneOnce = _.once(done);
-  webpack(SERVER_CONFIG).watch(100, (err, stats) => {
+  webpack(CLIENT_CONFIG).watch(100, (err, stats) => {
     cb(doneOnce)(err, stats);
   });
 });
@@ -69,8 +69,7 @@ const CLIENT_CONFIG = {
   ...BASE_CONFIG,
   entry: './app/client.js',
   output: {
-    path: path.join(__dirname, 'build/static'),
-    publicPath: 'http://localhost:5000/static/',
+    path: path.join(__dirname, 'build'),
     filename: 'client.js'
   },
 };
