@@ -1,0 +1,12 @@
+{
+  "name": "universal-js",
+  "version": "0.0.1",
+  "author": "stopachka",
+  "devDependencies": {
+    "babel-core": "6.5.2",
+    "babel-preset-es2015": "6.5.0",
+    "express": "4.13.4",
+    "gulp": "3.9.1",
+    "webpack": "1.12.13"
+  }
+}
