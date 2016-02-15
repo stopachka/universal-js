@@ -1,5 +1,4 @@
 import React from 'react';
-import prettyDate from 'pretty-date';
 import _ from 'lodash';
 
 // ------------------------------------------------------------
@@ -119,7 +118,6 @@ function Post({post}) {
     <div>
       <div style={HEADLINE_STYLE}>
         <h1 style={TITLE_STYLE}>{post.title}</h1>
-        <h3 style={SUBTITLE_STYLE}>{friendlyTime(post.at)}</h3>
       </div>
       <div style={CONTENT_STYLE}>
         {post.body}
@@ -127,9 +125,5 @@ function Post({post}) {
     </div>
   );
 }
-
-function friendlyTime(at) {
-  return prettyDate.format(new Date(at));
-};
 
 export {App, PostIndex, PostShow};
