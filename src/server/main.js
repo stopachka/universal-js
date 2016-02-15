@@ -30,4 +30,3 @@ function templ(body) {
     </html>
   `
 };
-`
