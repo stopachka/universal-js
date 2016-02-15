@@ -10,6 +10,33 @@ const BABEL_OPTS = JSON.parse(fs.readFileSync('.babelrc'));
 // ------------------------------------------------------------
 // Webpack Configs
 
+const BASE_CONFIG = {
+  module: {
+    loaders: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel',
+        query: BABEL_OPTS,
+      },
+    ],
+  },
+}
+
+// Client
+
+const CLIENT_CONFIG = {
+  ...BASE_CONFIG,
+  entry: './app/client.js',
+  output: {
+    path: path.join(__dirname, 'app/client'),
+    publicPath: 'http://localhost:5000/build/',
+    filename: 'client.js'
+  },
+};
+
+// Server
+
 const NODE_MODULES = fs.readdirSync('node_modules')
   .filter(dir => dir !== '.bin')
   .reduce(
@@ -21,23 +48,13 @@ const NODE_MODULES = fs.readdirSync('node_modules')
   )
 ;
 
-
-const CONFIG = {
-  entry: './src/server/main.js',
+const SERVER_CONFIG = {
+  ...BASE_CONFIG,
+  entry: './app/server.js',
   target: 'node',
   output: {
     path: path.join(__dirname, 'build'),
-    filename: 'backend.js',
-  },
-  module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: 'babel',
-        query: BABEL_OPTS,
-      },
-    ],
+    filename: 'server.js',
   },
   externals: NODE_MODULES,
 };
@@ -46,12 +63,12 @@ const CONFIG = {
 // Tasks
 
 gulp.task('backend-build', done => {
-  webpack(CONFIG).run(cb(done));
+  webpack(SERVER_CONFIG).run(cb(done));
 });
 
 gulp.task('backend-watch', done => {
   const doneOnce = _.once(done);
-  webpack(CONFIG).watch(100, (err, stats) => {
+  webpack(SERVER_CONFIG).watch(100, (err, stats) => {
     nodemon.restart();
     cb(doneOnce)(err, stats);
   });
@@ -62,7 +79,7 @@ gulp.task('default', ['backend-watch'], () => {
     execMap: {
       js: 'node',
     },
-    script: path.join(__dirname, 'build/backend'),
+    script: path.join(__dirname, 'build/server'),
   }).on('restart', () => console.log('[nodemon] restart'));
 });
 

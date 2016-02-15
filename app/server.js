@@ -1,15 +1,14 @@
-import {RouterContext, match} from 'react-router';
 import express from 'express';
-import React from 'react';
 import routes from './routes';
+import {renderToString} from 'react-dom/server';
+import {RouterContext, match} from 'react-router';
+import React from 'react';
 
 const app = express();
 
 app.get('/:params?*', (req, res) => {
   match({routes, location: req.url}, (err, redirect, props) => {
-    res.status(200).send(
-      templ(React.renderToString(<RouterContext {...props} />))
-    );
+    res.status(200).send(templ(renderToString(<RouterContext {...props} />)));
   });
 });
 
@@ -27,8 +26,8 @@ function templ(body) {
         <meta name="viewport" content="width=device-width, initial-scale=1">
       </head>
       <body>
-        ${body}
+        <div class="react-root">${body}</div>
       </body>
     </html>
-  `
-};
+  `;
+}

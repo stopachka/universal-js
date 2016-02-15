@@ -3,8 +3,8 @@ import React from 'react';
 
 const App = React.createClass({
   render() {
-    return <div>hello</div>;
-  },
+    return <span>Hi there!</span>;
+  }
 });
 
 export default (
