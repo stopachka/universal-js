@@ -5,10 +5,43 @@ import fs from 'fs';
 import _ from 'lodash';
 import nodemon from 'nodemon';
 
-const BABEL_OPTS = JSON.parse(fs.readFileSync('.babelrc'));
+// ------------------------------------------------------------
+// Tasks
+
+gulp.task('server-build', done => {
+  webpack(SERVER_CONFIG).run(cb(done));
+});
+
+gulp.task('frontend-build', done => {
+  webpack(CLIENT_CONFIG).run(cb(done));
+});
+
+gulp.task('backend-watch', done => {
+  const doneOnce = _.once(done);
+  webpack(SERVER_CONFIG).watch(100, (err, stats) => {
+    nodemon.restart();
+    cb(doneOnce)(err, stats);
+  });
+});
+
+gulp.task('default', ['backend-watch'], () => {
+  nodemon({
+    execMap: {
+      js: 'node',
+    },
+    script: path.join(__dirname, 'build/server'),
+  }).on('restart', () => console.log('[nodemon] restart'));
+});
+
+const cb = done => (err, stats) => {
+  console.log(err || stats.toString());
+  done();
+}
 
 // ------------------------------------------------------------
-// Webpack Configs
+// Webpack
+
+const BABEL_OPTS = JSON.parse(fs.readFileSync('.babelrc'));
 
 const BASE_CONFIG = {
   module: {
@@ -58,36 +91,3 @@ const SERVER_CONFIG = {
   },
   externals: NODE_MODULES,
 };
-
-// ------------------------------------------------------------
-// Tasks
-
-gulp.task('server-build', done => {
-  webpack(SERVER_CONFIG).run(cb(done));
-});
-
-gulp.task('frontend-build', done => {
-  webpack(CLIENT_CONFIG).run(cb(done));
-});
-
-gulp.task('backend-watch', done => {
-  const doneOnce = _.once(done);
-  webpack(SERVER_CONFIG).watch(100, (err, stats) => {
-    nodemon.restart();
-    cb(doneOnce)(err, stats);
-  });
-});
-
-gulp.task('default', ['backend-watch'], () => {
-  nodemon({
-    execMap: {
-      js: 'node',
-    },
-    script: path.join(__dirname, 'build/server'),
-  }).on('restart', () => console.log('[nodemon] restart'));
-});
-
-const cb = done => (err, stats) => {
-  console.log(err || stats.toString());
-  done();
-}
