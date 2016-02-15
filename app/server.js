@@ -36,6 +36,7 @@ function templ(body) {
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="http://fast.fonts.net/jsapi/15046032-4cb8-4f35-b794-7d6caf755c60.js"></script>
       </head>
       <body>
         <div id="react-root">${body}</div>
