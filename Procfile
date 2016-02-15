@@ -1,1 +1,1 @@
-web: gulp backend-build && node build/backend.js
+web: gulp backend-build && node build/server.js

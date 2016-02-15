@@ -1,10 +1,12 @@
 import express from 'express';
+import path from 'path';
 import routes from './routes';
 import {renderToString} from 'react-dom/server';
 import {RouterContext, match} from 'react-router';
 import React from 'react';
 
 const app = express();
+app.use('/static', express.static('build/static'));
 
 app.get('/:params?*', (req, res) => {
   match({routes, location: req.url}, (err, redirect, props) => {

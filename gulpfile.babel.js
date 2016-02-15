@@ -12,11 +12,7 @@ gulp.task('server-build', done => {
   webpack(SERVER_CONFIG).run(cb(done));
 });
 
-gulp.task('frontend-build', done => {
-  webpack(CLIENT_CONFIG).run(cb(done));
-});
-
-gulp.task('backend-watch', done => {
+gulp.task('server-watch', done => {
   const doneOnce = _.once(done);
   webpack(SERVER_CONFIG).watch(100, (err, stats) => {
     nodemon.restart();
@@ -24,7 +20,18 @@ gulp.task('backend-watch', done => {
   });
 });
 
-gulp.task('default', ['backend-watch'], () => {
+gulp.task('client-build', done => {
+  webpack(CLIENT_CONFIG).run(cb(done));
+});
+
+gulp.task('client-watch', done => {
+  const doneOnce = _.once(done);
+  webpack(SERVER_CONFIG).watch(100, (err, stats) => {
+    cb(doneOnce)(err, stats);
+  });
+});
+
+gulp.task('default', ['server-watch', 'client-watch'], () => {
   nodemon({
     execMap: {
       js: 'node',
