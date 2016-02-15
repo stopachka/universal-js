@@ -1,9 +1,10 @@
-import express from 'express';
-import path from 'path';
-import routes from './routes';
 import {renderToString} from 'react-dom/server';
 import {RouterContext, match} from 'react-router';
+import express from 'express';
+import path from 'path';
 import React from 'react';
+
+import routes from './routes';
 
 const app = express();
 
