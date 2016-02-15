@@ -1,13 +1,15 @@
 import {RouterContext, match} from 'react-router';
 import express from 'express';
 import React from 'react';
-import routes from '../shared/routes';
+import routes from './routes';
 
 const app = express();
 
 app.get('/:params?*', (req, res) => {
   match({routes, location: req.url}, (err, redirect, props) => {
-    res.status(200).send(templ(React.renderToString(<RouterContext {...props} />)));
+    res.status(200).send(
+      templ(React.renderToString(<RouterContext {...props} />))
+    );
   });
 });
 
