@@ -41,7 +41,7 @@ gulp.task('default', ['server-watch', 'client-watch'], () => {
   }).on('restart', () => console.log('[nodemon] restart'));
 });
 
-gulp.task('test:ci', done => {
+gulp.task('test', done => {
   console.log('testing!');
   done();
 });
