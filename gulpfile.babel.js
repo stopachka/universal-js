@@ -41,6 +41,11 @@ gulp.task('default', ['server-watch', 'client-watch'], () => {
   }).on('restart', () => console.log('[nodemon] restart'));
 });
 
+gulp.task('test:ci', done => {
+  console.log('testing!');
+  done();
+});
+
 const cb = done => (err, stats) => {
   console.log(err || stats.toString());
   done();
