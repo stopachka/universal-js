@@ -111,22 +111,25 @@ class PostIndex extends Component {
   }
 
   render() {
+    const page = this._page();
     return (
       <div>
         <div>
-          {paginate(POSTS, this._page()).map(
+          {paginate(POSTS, page).map(
             post => <Post key={post.id} post={post} />
           )}
         </div>
         <div style={PAGINATION_BAR_STYLE}>
           <button
             role="button"
+            key={`newer${page}`}
             style={PAGINATION_BTN_STYLE}
             onClick={this._handleNewer}>
               &larr; Newer
           </button>
           <button
             role="button"
+            key={`older-${page}`}
             style={PAGINATION_BTN_STYLE}
             onClick={this._handleOlder}>
               Older &rarr;
