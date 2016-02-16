@@ -4,18 +4,7 @@ import _ from 'lodash';
 // ------------------------------------------------------------
 // DUMMY DATA
 
-const POSTS = {
-  0: {
-    title: 'Be okay with thinking',
-    at: 1455575768455,
-    body: 'Bertrand Russell once wrote a piece that I am about to bastardize, but it has been hugely impactful for me since I read it. He said, when working on complex problems, think as hard you can about it, then stop, and go about your day. Be okay with not being able to produce an answer, or do something right away. Let your mind think it over, the answer will come'
-  },
-  1: {
-    title: 'Commitment',
-    at: 1455573238455,
-    body: 'We\'re taught that keeping our options open is always good. But, the more I mature, the less good I see in that path. It introduces anxiety, and reduces how deep you are willing to go, how much you\'re willing to put on the line, how much pride you take in what you do.'
-  },
-}
+import POSTS from '../posts';
 
 // ------------------------------------------------------------
 // constants
@@ -76,7 +65,7 @@ const CONTENT_STYLE = {
 // ------------------------------------------------------------
 // Components
 
-const App = React.createClass({
+class App extends React.Component {
   render() {
     return (
       <div style={APP_STYLE}>
@@ -84,25 +73,19 @@ const App = React.createClass({
         {this.props.children}
       </div>
     );
-  },
-});
+  }
+}
 
-const PostIndex = React.createClass({
+class PostIndex extends React.Component {
   render() {
+    console.warn(this.props);
     return (
       <div>
         {_.values(POSTS).map(post => <Post key={post.id} post={post} />)}
       </div>
     );
-  },
-});
-
-const PostShow = React.createClass({
-  render() {
-    return <span>Post</span>;
-  },
-});
-
+  }
+}
 
 function Header() {
   return (
@@ -119,11 +102,12 @@ function Post({post}) {
       <div style={HEADLINE_STYLE}>
         <h1 style={TITLE_STYLE}>{post.title}</h1>
       </div>
-      <div style={CONTENT_STYLE}>
-        {post.body}
+      <div
+        style={CONTENT_STYLE}
+        dangerouslySetInnerHTML={{__html: post.content}}>
       </div>
     </div>
   );
 }
 
-export {App, PostIndex, PostShow};
+export {App, PostIndex};

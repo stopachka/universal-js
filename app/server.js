@@ -1,12 +1,16 @@
 import {renderToString} from 'react-dom/server';
 import {RouterContext, match} from 'react-router';
 import express from 'express';
+import fs from 'fs';
 import path from 'path';
 import React from 'react';
 
 import routes from './routes';
 
 const app = express();
+
+// ------------------------------------------------------------
+// Static
 
 app.use('/client.js', (req, res) => {
   res.sendFile('client.js', {root: 'build'});

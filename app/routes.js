@@ -6,6 +6,6 @@ import {App, PostIndex, PostShow} from './components';
 export default (
   <Route path="/" component={App}>
     <IndexRoute component={PostIndex} />
-    <Route path=":id" component={PostShow} />
+    <Route path="p/:page" component={PostIndex} />
   </Route>
 );

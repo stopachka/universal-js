@@ -31,7 +31,11 @@ gulp.task('client-watch', done => {
   });
 });
 
-gulp.task('build', ['server-build', 'client-build']);
+gulp.task('test', done => {
+  console.log('testing!');
+  done();
+});
+
 gulp.task('default', ['server-watch', 'client-watch'], () => {
   nodemon({
     execMap: {
@@ -41,10 +45,7 @@ gulp.task('default', ['server-watch', 'client-watch'], () => {
   }).on('restart', () => console.log('[nodemon] restart'));
 });
 
-gulp.task('test', done => {
-  console.log('testing!');
-  done();
-});
+gulp.task('build', ['server-build', 'client-build']);
 
 const cb = done => (err, stats) => {
   console.log(err || stats.toString());
