@@ -44,7 +44,7 @@ function templ(body) {
       </head>
       <body>
         <div id="react-root">${body}</div>
-        <script src="client.js"></script>
+        <script src="../../../client.js"></script>
       </body>
     </html>
   `;

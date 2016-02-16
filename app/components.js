@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import marked from 'marked';
 import React, {PropTypes, Component} from 'react';
 
 // ------------------------------------------------------------
@@ -74,6 +75,7 @@ const PAGINATION_BAR_STYLE = {
 const BTN_RESET = {
   background: 'none',
   border: 'none',
+  cursor: 'pointer',
 }
 
 const PAGINATION_BTN_STYLE = {
@@ -144,7 +146,11 @@ class PostIndex extends Component {
   }
 
   _page = () => {
-    return +(this.props.params.page || 0);
+    const n = +this.props.params.page;
+    return Math.max(
+      Number.isSafeInteger(n) ? n : 0,
+      0
+    );
   }
 }
 
@@ -175,7 +181,7 @@ function Post({post}) {
       </div>
       <div
         style={CONTENT_STYLE}
-        dangerouslySetInnerHTML={{__html: post.content}}>
+        dangerouslySetInnerHTML={{__html: marked(post.content)}}>
       </div>
     </div>
   );
