@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import {Link, IndexLink} from 'react-router';
 import marked from 'marked';
 import React, {PropTypes, Component} from 'react';
 
@@ -33,6 +34,9 @@ const NAME_STYLE = {
   letterSpacing: '5px',
   fontSize: '20px',
   color: STOPA_BLACK,
+  display: 'block',
+  textDecoration: 'none',
+  margin: `${MARGIN}px 0`,
 };
 
 const BUTTON_STYLE = {
@@ -50,6 +54,10 @@ const TITLE_STYLE = {
   fontFamily: DIN_LIGHT,
   fontSize: '32px',
   fontWeight: 'normal',
+  margin: `${MARGIN}px 0`,
+  display: 'inline-block',
+  color: STOPA_BLACK,
+  textDecoration: 'none',
 };
 
 const SUBTITLE_STYLE = {
@@ -140,12 +148,12 @@ class PostIndex extends Component {
   }
 
   _handleNewer = () => {
-    this.context.router.push(`/p/${this._page() - 1}`);
+    this.context.router.push(`/page/${this._page() - 1}`);
   }
 
   _handleOlder = () => {
     const page = Math.min(this._page() + 1);
-    this.context.router.push(`/p/${page}`);
+    this.context.router.push(`/page/${page}`);
   }
 
   _page = () => {
@@ -154,6 +162,17 @@ class PostIndex extends Component {
       Number.isSafeInteger(n) ? n : 0,
       0
     );
+  }
+}
+
+class PostShow extends Component {
+  static propTypes = {
+    params: PropTypes.object.isRequired,
+  }
+
+  render() {
+    const post = POSTS[this.props.params.post];
+    return <Post post={post} />
   }
 }
 
@@ -170,7 +189,7 @@ function paginate(ps, page) {
 function Header() {
   return (
     <div style={HEADER_STYLE}>
-      <h1 style={NAME_STYLE}>Stepan Parunashvili</h1>
+      <IndexLink to="/" style={NAME_STYLE}>Stepan Parunashvili</IndexLink>
       <a style={BUTTON_STYLE} href="mailto:stepan.p@gmail.com">Contact</a>
     </div>
   );
@@ -180,7 +199,7 @@ function Post({post}) {
   return (
     <div style={POST_STYLE}>
       <div style={HEADLINE_STYLE}>
-        <h1 style={TITLE_STYLE}>{post.title}</h1>
+        <Link style={TITLE_STYLE} to={`/post/${post.id}`}>{post.title}</Link>
       </div>
       <div
         style={CONTENT_STYLE}
@@ -190,4 +209,4 @@ function Post({post}) {
   );
 }
 
-export {App, PostIndex};
+export {App, PostIndex, PostShow};
