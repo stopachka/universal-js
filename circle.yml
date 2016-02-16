@@ -5,4 +5,4 @@ deployment:
   prod:
     branch: master
     heroku:
-      appname: safe-bastion-65062
+      appname: blog
