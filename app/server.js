@@ -27,7 +27,7 @@ app.get('/:params?*', (req, res) => {
     }
   });
 });
-console.log(process.env.PORT || 5000);
+
 app.listen(process.env.PORT || 5000);
 
 // ------------------------------------------------------------
@@ -44,7 +44,7 @@ function templ(body) {
       </head>
       <body>
         <div id="react-root">${body}</div>
-        <script src="../../../client.js"></script>
+        <script src="http://localhost:3000/build/client.js"></script>
       </body>
     </html>
   `;

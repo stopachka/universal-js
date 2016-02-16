@@ -32,10 +32,15 @@ gulp.task('server-watch', done => {
 });
 
 gulp.task('client-watch', done => {
-  new WebpackDevServer(webpack(CLIENT_DEV_CONFIG), {hot: true}).listen(
+  new WebpackDevServer(webpack(CLIENT_DEV_CONFIG), {
+    hot: true,
+    publicPath: CLIENT_DEV_CONFIG.output.publicPath,
+    headers: { 'Access-Control-Allow-Origin': '*' }
+  }).listen(
     3000,
     'localhost',
     (err, res) => {
+      done();
       console.log(err || '[webpack-dev-server: localhost:3000]');
     },
   );
@@ -91,7 +96,10 @@ const CLIENT_DEV_CONFIG = {
   plugins: [
     new webpack.HotModuleReplacementPlugin({quiet: true}),
   ],
-  output: CLIENT_OUTPUT,
+  output: {
+    ...CLIENT_OUTPUT,
+    publicPath: 'http://localhost:3000/build/',
+  },
   module: {
     loaders: [{...JS_LOADER, loader: 'react-hot'}, BABEL_LOADER],
   },
