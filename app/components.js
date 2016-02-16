@@ -1,5 +1,5 @@
-import React from 'react';
 import _ from 'lodash';
+import React, {PropTypes, Component} from 'react';
 
 // ------------------------------------------------------------
 // DUMMY DATA
@@ -7,7 +7,7 @@ import _ from 'lodash';
 import POSTS from '../posts';
 
 // ------------------------------------------------------------
-// constants
+// style
 
 const DIN_REGULAR = 'DIN Next W01 Regular';
 const DIN_LIGHT = 'DIN Next W01 Light';
@@ -17,7 +17,7 @@ const MARGIN = 20;
 
 const APP_STYLE = {
   width: '500px',
-  margin: `${MARGIN * 2}px auto 0 auto`
+  margin: `${MARGIN * 2}px auto ${MARGIN * 2}px auto`
 }
 
 const HEADER_STYLE = {
@@ -62,10 +62,31 @@ const CONTENT_STYLE = {
   lineHeight: '1.5',
 };
 
+const POST_STYLE = {
+  paddingBottom: `${MARGIN}px`,
+};
+
+const PAGINATION_BAR_STYLE = {
+  display: 'flex',
+  justifyContent: 'space-between',
+};
+
+const BTN_RESET = {
+  background: 'none',
+  border: 'none',
+}
+
+const PAGINATION_BTN_STYLE = {
+  ...BTN_RESET,
+  color: STOPA_RED,
+  fontFamily: DIN_LIGHT,
+  fontSize: '15px',
+};
+
 // ------------------------------------------------------------
 // Components
 
-class App extends React.Component {
+class App extends Component {
   render() {
     return (
       <div style={APP_STYLE}>
@@ -76,15 +97,65 @@ class App extends React.Component {
   }
 }
 
-class PostIndex extends React.Component {
+const PER_PAGE = 10;
+
+class PostIndex extends Component {
+  static contextTypes = {
+    router: PropTypes.object.isRequired,
+  }
+
+  static propTypes = {
+    params: PropTypes.object.isRequired,
+  }
+
   render() {
-    console.warn(this.props);
     return (
       <div>
-        {_.values(POSTS).map(post => <Post key={post.id} post={post} />)}
+        <div>
+          {paginate(POSTS, this._page()).map(
+            post => <Post key={post.id} post={post} />
+          )}
+        </div>
+        <div style={PAGINATION_BAR_STYLE}>
+          <button
+            role="button"
+            style={PAGINATION_BTN_STYLE}
+            onClick={this._handleNewer}>
+              &larr; Newer
+          </button>
+          <button
+            role="button"
+            style={PAGINATION_BTN_STYLE}
+            onClick={this._handleOlder}>
+              Older &rarr;
+          </button>
+        </div>
       </div>
     );
   }
+
+  _handleNewer = () => {
+    this.context.router.push(`/p/${this._page() - 1}`);
+  }
+
+  _handleOlder = () => {
+    const page = Math.min(this._page() + 1);
+    this.context.router.push(`/p/${page}`);
+  }
+
+  _page = () => {
+    return +(this.props.params.page || 0);
+  }
+}
+
+function paginate(ps, page) {
+  const start = page * PER_PAGE;
+  return _.chain(ps)
+    .values()
+    .sortBy(p => -p.createdAt)
+    .slice(start, start + PER_PAGE)
+    .value()
+  ;
 }
 
 function Header() {
@@ -98,7 +169,7 @@ function Header() {
 
 function Post({post}) {
   return (
-    <div>
+    <div style={POST_STYLE}>
       <div style={HEADLINE_STYLE}>
         <h1 style={TITLE_STYLE}>{post.title}</h1>
       </div>
