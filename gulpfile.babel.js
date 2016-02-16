@@ -31,6 +31,7 @@ gulp.task('client-watch', done => {
   });
 });
 
+gulp.task('build', ['server-build', 'client-build']);
 gulp.task('default', ['server-watch', 'client-watch'], () => {
   nodemon({
     execMap: {
