@@ -1,12 +1,13 @@
-import gulp from 'gulp';
-import webpack from 'webpack';
-import path from 'path';
-import fs from 'fs';
 import _ from 'lodash';
-import nodemon from 'nodemon';
 import express from 'express';
-import webpackHotMiddleWare from 'webpack-hot-middleware';
+import fs from 'fs';
+import gulp from 'gulp';
+import jest from 'jest-cli';
+import nodemon from 'nodemon';
+import path from 'path';
+import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleWare from 'webpack-hot-middleware';
 
 // ------------------------------------------------------------
 // Tasks
@@ -40,16 +41,9 @@ gulp.task('client-watch', done => {
 
 gulp.task('default', ['server-watch', 'client-watch'], () => {
   nodemon({
-    execMap: {
-      js: 'node',
-    },
+    execMap: {js: 'node'},
     script: path.join(__dirname, 'build/server'),
   }).on('restart', () => console.log('[nodemon] restart'));
-});
-
-gulp.task('test', done => {
-  console.log('testing!');
-  done();
 });
 
 const cb = done => (err, stats) => {
@@ -57,6 +51,14 @@ const cb = done => (err, stats) => {
   done();
 }
 
+// Test
+
+gulp.task('test', done => {
+  jest.runCLI({}, path.join(__dirname, 'app'), (res) => {
+    console.log(res || '[jest] tests failed');
+    done();
+  });
+});
 
 // ------------------------------------------------------------
 // Hot Loading Server
@@ -64,7 +66,7 @@ const cb = done => (err, stats) => {
 const HOT_SERVER_PORT = 3000;
 const HOT_SERVER_URL = `http://localhost:${HOT_SERVER_PORT}`;
 
-function runHotServer(config) {
+function runHotServer() {
   const opts = {
     hot: true,
     publicPath: CLIENT_DEV_CONFIG.output.publicPath,
@@ -89,14 +91,14 @@ const BABEL_LOADER = {
   test: /\.js$/,
   exclude: /node_modules/,
   query: BABEL_LOADER,
-}
+};
 
 // Client
 
 const CLIENT_OUTPUT = {
   path: path.join(__dirname, 'build'),
   filename: 'client.js'
-}
+};
 
 const CLIENT_ENTRY = './app/client.js';
 
@@ -130,8 +132,9 @@ const CLIENT_PROD_CONFIG = {
     loaders: [BABEL_LOADER],
   },
   plugins: [
+    // perf for libraries client side
     new webpack.DefinePlugin({
-      'process.env': {NODE_ENV: '"production"'} // perf for libraries client side
+      'process.env': {NODE_ENV: '"production"'},
     }),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
@@ -163,8 +166,5 @@ const SERVER_DEV_CONFIG = {
     loaders: [BABEL_LOADER],
   }
 };
-
-// ------------------------------------------------------------
-// Hot Reloading
 
 const SERVER_PROD_CONFIG = SERVER_DEV_CONFIG;
