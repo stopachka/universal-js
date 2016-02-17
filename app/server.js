@@ -44,7 +44,14 @@ function templ(body) {
       </head>
       <body>
         <div id="react-root">${body}</div>
-        <script src="http://localhost:3000/build/client.js"></script>
+        <script
+          src="${
+            // stopachka(TODO) ahh need a cfg, or inital state
+            process.env.PRODCUTION
+              ? '../../client.js'
+              : 'http://localhost:3000/build/client.js'
+          }">
+        </script>
       </body>
     </html>
   `;
