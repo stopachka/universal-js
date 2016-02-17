@@ -81,7 +81,7 @@ function runHotServer(config) {
 
 // ------------------------------------------------------------
 // Webpack
-
+console.log(process.env.NODE_ENV === 'production');
 const isProd = process.env.NODE_ENV === 'production';
 const BABEL_QUERY = JSON.parse(fs.readFileSync('.babelrc'));
 const BABEL_LOADER = {

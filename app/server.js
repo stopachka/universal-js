@@ -47,7 +47,7 @@ function templ(body) {
         <script
           src="${
             // stopachka(TODO) ahh need a cfg, or inital state
-            process.env.PRODCUTION
+            process.env.NODE_ENV === 'production'
               ? '../../client.js'
               : 'http://localhost:3000/build/client.js'
           }">
