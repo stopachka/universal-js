@@ -16,11 +16,9 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 gulp.task('server-build', done => {
   webpack(SERVER_PROD_CONFIG).run(cb(done));
 });
-
 gulp.task('client-build', done => {
   webpack(CLIENT_PROD_CONFIG).run(cb(done));
 });
-
 gulp.task('build', ['server-build', 'client-build']);
 
 // Dev
@@ -32,12 +30,10 @@ gulp.task('server-watch', done => {
     cb(doneOnce)(err, stats);
   });
 });
-
 gulp.task('client-watch', done => {
   runHotServer();
   done();
 });
-
 gulp.task('default', ['server-watch', 'client-watch'], () => {
   nodemon({
     execMap: {
@@ -46,7 +42,6 @@ gulp.task('default', ['server-watch', 'client-watch'], () => {
     script: path.join(__dirname, 'build/server'),
   }).on('restart', () => console.log('[nodemon] restart'));
 });
-
 gulp.task('test', done => {
   console.log('testing!');
   done();
@@ -128,14 +123,7 @@ const CLIENT_PROD_CONFIG = {
   output: CLIENT_OUTPUT,
   module: {
     loaders: [BABEL_LOADER],
-  },
-  plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {NODE_ENV: '"production"'} // perf for libraries client side
-    }),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
-  ],
+  }
 }
 
 // Server
