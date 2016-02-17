@@ -4,7 +4,9 @@ import path from 'path';
 import fs from 'fs';
 import _ from 'lodash';
 import nodemon from 'nodemon';
-import WebpackDevServer from 'webpack-dev-server';
+import express from 'express';
+import webpackHotMiddleWare from 'webpack-hot-middleware';
+import webpackDevMiddleware from 'webpack-dev-middleware';
 
 // ------------------------------------------------------------
 // Tasks
@@ -32,18 +34,8 @@ gulp.task('server-watch', done => {
 });
 
 gulp.task('client-watch', done => {
-  new WebpackDevServer(webpack(CLIENT_DEV_CONFIG), {
-    hot: true,
-    publicPath: CLIENT_DEV_CONFIG.output.publicPath,
-    headers: { 'Access-Control-Allow-Origin': '*' }
-  }).listen(
-    3000,
-    'localhost',
-    (err, res) => {
-      done();
-      console.log(err || '[webpack-dev-server: localhost:3000]');
-    },
-  );
+  runHotServer();
+  done();
 });
 
 gulp.task('default', ['server-watch', 'client-watch'], () => {
@@ -67,16 +59,36 @@ const cb = done => (err, stats) => {
 
 
 // ------------------------------------------------------------
+// Hot Loading Server
+
+const HOT_SERVER_PORT = 3000;
+const HOT_SERVER_URL = `http://localhost:${HOT_SERVER_PORT}`;
+
+function runHotServer(config) {
+  const opts = {
+    hot: true,
+    publicPath: CLIENT_DEV_CONFIG.output.publicPath,
+    headers: {'Access-Control-Allow-Origin': '*'},
+  };
+  const app = new express();
+  const compiler = webpack(CLIENT_DEV_CONFIG);
+  app.use(webpackDevMiddleware(compiler, opts));
+  app.use(webpackHotMiddleWare(compiler));
+  app.listen(HOT_SERVER_PORT, (err) => {
+    console.log(err || `[webpack-hot-devserver] running on ${HOT_SERVER_PORT}`);
+  });
+}
+
+// ------------------------------------------------------------
 // Webpack
 
 const isProd = process.env.NODE_ENV === 'production';
-const BABEL_OPTS = JSON.parse(fs.readFileSync('.babelrc'));
-const JS_LOADER = {
+const BABEL_QUERY = JSON.parse(fs.readFileSync('.babelrc'));
+const BABEL_LOADER = {
+  loader: 'babel',
   test: /\.js$/,
   exclude: /node_modules/,
-}
-const BABEL_LOADER = {
-  ...JS_LOADER, loader: 'babel', query: BABEL_OPTS,
+  query: BABEL_LOADER,
 }
 
 // Client
@@ -85,23 +97,29 @@ const CLIENT_OUTPUT = {
   path: path.join(__dirname, 'build'),
   filename: 'client.js'
 }
+
 const CLIENT_ENTRY = './app/client.js';
 
 const CLIENT_DEV_CONFIG = {
   entry: [
     CLIENT_ENTRY,
-    'webpack-dev-server/client?http://localhost:3000',
-    'webpack/hot/only-dev-server',
+    `webpack-hot-middleware/client?path=${HOT_SERVER_URL}/__webpack_hmr`,
+    'eventsource-polyfill',
   ],
   plugins: [
-    new webpack.HotModuleReplacementPlugin({quiet: true}),
+    new webpack.HotModuleReplacementPlugin(),
   ],
   output: {
     ...CLIENT_OUTPUT,
-    publicPath: 'http://localhost:3000/build/',
+    publicPath: `${HOT_SERVER_URL}/build/`,
   },
   module: {
-    loaders: [{...JS_LOADER, loader: 'react-hot'}, BABEL_LOADER],
+    loaders: [
+      {
+        ...BABEL_LOADER,
+        query: {...BABEL_QUERY, presets: [...BABEL_QUERY.presets, 'react-hmre']},
+      },
+    ],
   },
 }
 
@@ -138,5 +156,8 @@ const SERVER_DEV_CONFIG = {
     loaders: [BABEL_LOADER],
   }
 };
+
+// ------------------------------------------------------------
+// Hot Reloading
 
 const SERVER_PROD_CONFIG = SERVER_DEV_CONFIG;

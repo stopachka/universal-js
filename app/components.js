@@ -189,7 +189,7 @@ function paginate(ps, page) {
 function Header() {
   return (
     <div style={HEADER_STYLE}>
-      <IndexLink to="/" style={NAME_STYLE}>Stepan Parunashv</IndexLink>
+      <IndexLink to="/" style={NAME_STYLE}>Stepan Parunashvili</IndexLink>
       <a style={BUTTON_STYLE} href="mailto:stepan.p@gmail.com">Contact</a>
     </div>
   );
