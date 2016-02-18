@@ -152,8 +152,7 @@ class PostIndex extends Component {
   }
 
   _handleOlder = () => {
-    const page = Math.min(this._page() + 1);
-    this.context.router.push(`/page/${page}`);
+    this.context.router.push(`/page/${this._page() + 1}`);
   }
 
   _page = () => {
