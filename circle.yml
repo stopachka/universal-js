@@ -1,6 +1,3 @@
-test:
-  post:
-    - gulp test
 deployment:
   prod:
     branch: master

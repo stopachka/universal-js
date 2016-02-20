@@ -2,7 +2,6 @@ import _ from 'lodash';
 import express from 'express';
 import fs from 'fs';
 import gulp from 'gulp';
-import jest from 'jest-cli';
 import nodemon from 'nodemon';
 import path from 'path';
 import webpack from 'webpack';
@@ -50,15 +49,6 @@ const cb = done => (err, stats) => {
   console.log(err || stats.toString());
   done();
 }
-
-// Test
-
-gulp.task('test', done => {
-  jest.runCLI({}, path.join(__dirname, 'app'), (res) => {
-    console.log(res || '[jest] tests failed');
-    done();
-  });
-});
 
 // ------------------------------------------------------------
 // Hot Loading Server
