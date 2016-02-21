@@ -1,16 +1,17 @@
+import {Provider} from 'react-redux';
 import {renderToString} from 'react-dom/server';
 import {RouterContext, match} from 'react-router';
+import createStore from './create-store';
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
 import React from 'react';
-
 import routes from './routes';
 
 const app = express();
 
 // ------------------------------------------------------------
-// Static
+// API
 
 import POSTS from '../posts';
 
@@ -29,6 +30,10 @@ app.get('/client.js', (req, res) => {
   res.sendFile('client.js', {root: 'build'});
 });
 
+app.get('/favicon.ico', (req, res) => {
+  res.status(500).send('uh oh');
+});
+
 app.get('/:params?*', (req, res) => {
   match({routes, location: req.url}, async function(err, redirect, props) {
     if (err) {
@@ -36,11 +41,18 @@ app.get('/:params?*', (req, res) => {
     } else if (redirect) {
       res.redirect(302, redirect.pathname + redirect.search);
     } else {
-      const data = await fetchAllData(props)
-      res.status(200).send(templ(
-        renderToString(<RouterContext {...props} />),
-        data,
-      ));
+      // const data = await fetchAllData();
+      const store = createStore();
+      res.status(200).send(
+        templ(
+          renderToString(
+            <Provider store={store}>
+              <RouterContext {...props} />
+            </Provider>
+          ),
+          {},
+        ),
+      );
     }
   });
 });

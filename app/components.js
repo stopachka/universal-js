@@ -1,13 +1,11 @@
 import _ from 'lodash';
+import {connect} from 'react-redux';
 import {Link, IndexLink} from 'react-router';
+import fetch from 'isomorphic-fetch';
 import marked from 'marked';
 import React, {PropTypes, Component} from 'react';
-import fetch from 'isomorphic-fetch';
 
-// ------------------------------------------------------------
-// DUMMY DATA
-
-import POSTS from '../posts';
+const POSTS = {};
 
 // ------------------------------------------------------------
 // style
@@ -95,7 +93,7 @@ const PAGINATION_BTN_STYLE = {
 };
 
 // ------------------------------------------------------------
-// Components
+// Containers
 
 class App extends Component {
   render() {
@@ -110,7 +108,7 @@ class App extends Component {
 
 const PER_PAGE = 10;
 
-class PostIndex extends Component {
+const PostIndex = connect(state => state)(class extends Component {
   static fetchData() {
     return fetch(`http://localhost:5000/api/posts`)
       .then(r => r.json())
@@ -123,6 +121,7 @@ class PostIndex extends Component {
 
   static propTypes = {
     params: PropTypes.object.isRequired,
+    posts: PropTypes.object.isRequired,
   }
 
   render() {
@@ -130,7 +129,7 @@ class PostIndex extends Component {
     return (
       <div>
         <div>
-          {paginate(POSTS, page).map(
+          {paginate(this.props.posts, page).map(
             post => <Post key={post.id} post={post} />
           )}
         </div>
@@ -169,24 +168,7 @@ class PostIndex extends Component {
       0
     );
   }
-}
-
-class PostShow extends Component {
-  static fetchData({params}) {
-    return fetch(`http://localhost:5000/api/posts/${params.post}`)
-      .then(r => r.json())
-      .then(post => ({[params.post]: post}))
-  }
-
-  static propTypes = {
-    params: PropTypes.object.isRequired,
-  }
-
-  render() {
-    const post = POSTS[this.props.params.post];
-    return <Post post={post} />
-  }
-}
+});
 
 function paginate(ps, page) {
   const start = page * PER_PAGE;
@@ -197,6 +179,28 @@ function paginate(ps, page) {
     .value()
   ;
 }
+
+const PostShow = connect(
+  (state, ownProps) => ({post: state.posts[ownProps.params.post]}),
+)(class extends Component {
+  static fetchData({params}) {
+    return fetch(`http://localhost:5000/api/posts/${params.post}`)
+      .then(r => r.json())
+      .then(post => ({[params.post]: post}))
+  }
+
+  static propTypes = {
+    params: PropTypes.object.isRequired,
+    post: PropTypes.object.isRequired,
+  }
+
+  render() {
+    return <Post post={this.props.post} />
+  }
+});
+
+// ------------------------------------------------------------
+// Components
 
 function Header() {
   return (
