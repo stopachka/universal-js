@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {Link, IndexLink} from 'react-router';
 import marked from 'marked';
 import React, {PropTypes, Component} from 'react';
+import fetch from 'isomorphic-fetch';
 
 // ------------------------------------------------------------
 // DUMMY DATA
@@ -110,6 +111,12 @@ class App extends Component {
 const PER_PAGE = 10;
 
 class PostIndex extends Component {
+  static fetchData() {
+    return fetch(`http://localhost:5000/api/posts`)
+      .then(r => r.json())
+      .then(posts => ({posts}))
+  }
+
   static contextTypes = {
     router: PropTypes.object.isRequired,
   }
@@ -165,6 +172,12 @@ class PostIndex extends Component {
 }
 
 class PostShow extends Component {
+  static fetchData({params}) {
+    return fetch(`http://localhost:5000/api/posts/${params.post}`)
+      .then(r => r.json())
+      .then(post => ({[params.post]: post}))
+  }
+
   static propTypes = {
     params: PropTypes.object.isRequired,
   }

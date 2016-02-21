@@ -30,13 +30,17 @@ app.get('/client.js', (req, res) => {
 });
 
 app.get('/:params?*', (req, res) => {
-  match({routes, location: req.url}, (err, redirect, props) => {
+  match({routes, location: req.url}, async function(err, redirect, props) {
     if (err) {
       res.status(500).send(error.messsage);
     } else if (redirect) {
       res.redirect(302, redirect.pathname + redirect.search);
     } else {
-      res.status(200).send(templ(renderToString(<RouterContext {...props} />)));
+      const data = await fetchAllData(props)
+      res.status(200).send(templ(
+        renderToString(<RouterContext {...props} />),
+        data,
+      ));
     }
   });
 });
@@ -46,7 +50,7 @@ app.listen(process.env.PORT || 5000);
 // ------------------------------------------------------------
 // Helpers
 
-function templ(body) {
+function templ(body, data) {
   return `
     <!doctype html>
     <html>
@@ -57,6 +61,9 @@ function templ(body) {
       </head>
       <body>
         <div id="react-root">${body}</div>
+        <script>
+          window.__DATA__ = ${JSON.stringify(data)};
+        </script>
         <script
           src="${
             // stopachka(TODO) ahh need a cfg, or inital state
@@ -68,4 +75,13 @@ function templ(body) {
       </body>
     </html>
   `;
+}
+
+async function fetchAllData(props) {
+  return Promise.all(
+    props.components.filter(x => x.fetchData).map(x => x.fetchData(props))
+  ).then(xs => xs.reduce(
+    (data, x) => ({...data, ...x}),
+    {},
+  ));
 }
