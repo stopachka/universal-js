@@ -9,17 +9,17 @@
     "babel-preset-react": "6.5.0",
     "babel-preset-react-hmre": "1.1.0",
     "babel-preset-stage-1": "6.5.0",
-    "eventsource-polyfill": "^0.9.6",
+    "babel-plugin-transform-runtime": "6.5.0",
     "express": "4.13.4",
     "gulp": "3.9.1",
     "lodash": "4.3.0",
-    "marked": "^0.3.5",
+    "marked": "0.3.5",
     "nodemon": "1.8.1",
     "react": "0.14.7",
     "react-dom": "0.14.7",
     "react-router": "2.0.0",
     "webpack": "1.12.13",
-    "webpack-dev-middleware": "^1.5.1",
-    "webpack-hot-middleware": "^2.7.1"
+    "webpack-dev-middleware": "1.5.1",
+    "webpack-hot-middleware": "2.7.1"
   }
 }
