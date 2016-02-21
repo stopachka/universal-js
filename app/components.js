@@ -5,8 +5,6 @@ import fetch from 'isomorphic-fetch';
 import marked from 'marked';
 import React, {PropTypes, Component} from 'react';
 
-const POSTS = {};
-
 // ------------------------------------------------------------
 // style
 

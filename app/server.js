@@ -43,6 +43,7 @@ app.get('/:params?*', (req, res) => {
     } else {
       // const data = await fetchAllData();
       const store = createStore();
+
       res.status(200).send(
         templ(
           renderToString(
