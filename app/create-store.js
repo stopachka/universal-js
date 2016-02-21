@@ -21,7 +21,7 @@ const logMiddleware = () => next => action => {
 };
 
 // ------------------------------------------------------------
-// Middleware
+// createStore
 
 export default function() {
   return createStore(
