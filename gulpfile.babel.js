@@ -96,7 +96,6 @@ const CLIENT_DEV_CONFIG = {
   entry: [
     CLIENT_ENTRY,
     `webpack-hot-middleware/client?path=${HOT_SERVER_URL}/__webpack_hmr`,
-    'eventsource-polyfill',
   ],
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

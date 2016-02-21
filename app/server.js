@@ -12,7 +12,20 @@ const app = express();
 // ------------------------------------------------------------
 // Static
 
-app.use('/client.js', (req, res) => {
+import POSTS from '../posts';
+
+app.get('/api/posts', (req, res) => {
+  res.status(200).send(JSON.stringify(POSTS));
+});
+
+app.get('/api/posts/:id', (req, res) => {
+  res.status(200).send(JSON.stringify(POSTS[req.params.id]));
+});
+
+// ------------------------------------------------------------
+// Static
+
+app.get('/client.js', (req, res) => {
   res.sendFile('client.js', {root: 'build'});
 });
 
