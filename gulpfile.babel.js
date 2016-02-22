@@ -80,7 +80,7 @@ const BABEL_LOADER = {
   loader: 'babel',
   test: /\.js$/,
   exclude: /node_modules/,
-  query: BABEL_LOADER,
+  query: BABEL_QUERY,
 };
 
 // Client
