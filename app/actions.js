@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-fetch';
+
 export const GET_POSTS = 'GET_POSTS';
 
 export function getPosts() {
