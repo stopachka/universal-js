@@ -41,8 +41,8 @@ app.get('/:params?*', (req, res) => {
     } else if (redirect) {
       res.redirect(302, redirect.pathname + redirect.search);
     } else {
-      const data = await fetchAllData(props);
       const store = createStore();
+      const data = await fetchAllData(store, props);
       res.status(200).send(
         templ(
           renderToString(
@@ -50,7 +50,7 @@ app.get('/:params?*', (req, res) => {
               <RouterContext {...props} />
             </Provider>
           ),
-          data,
+          store.getState(),
         ),
       );
     }
@@ -89,11 +89,11 @@ function templ(body, data) {
   `;
 }
 
-async function fetchAllData(props) {
+async function fetchAllData(store, props) {
   return Promise.all(
-    props.components.filter(x => x.fetchData).map(x => x.fetchData(props))
-  ).then(xs => xs.reduce(
-    (data, x) => ({...data, ...x}),
-    {},
-  ));
+    props
+      .components
+      .filter(x => x.fetchData)
+      .map(x => x.fetchData(store, props))
+  );
 }

@@ -5,7 +5,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import routes from './routes';
 
-const store = createStore();
+const store = createStore(window.__DATA__);
 
 match({history: browserHistory, routes}, (err, redirect, props) => {
   ReactDOM.render(
@@ -21,6 +21,6 @@ match({history: browserHistory, routes}, (err, redirect, props) => {
 });
 
 function createElement(Comp, props) {
-  Comp.fetchData && Comp.fetchData(props);
+  Comp.fetchData && Comp.fetchData(store, props);
   return <Comp {...props} />;
 }

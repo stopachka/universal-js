@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import {connect} from 'react-redux';
 import {Link, IndexLink} from 'react-router';
+import {getPosts, getPost} from './actions';
 import fetch from 'isomorphic-fetch';
 import marked from 'marked';
 import React, {PropTypes, Component} from 'react';
@@ -107,11 +108,8 @@ class App extends Component {
 const PER_PAGE = 10;
 
 const PostIndex = connect(state => state)(class extends Component {
-  static fetchData() {
-    return fetch(`http://localhost:5000/api/posts`)
-      .then(r => r.json())
-      .then(posts => ({posts}))
-    ;
+  static fetchData({dispatch}) {
+    return dispatch(getPosts());
   }
 
   static contextTypes = {
@@ -182,19 +180,17 @@ function paginate(ps, page) {
 const PostShow = connect(
   (state, ownProps) => ({post: state.posts[ownProps.params.post]}),
 )(class extends Component {
-  static fetchData({params}) {
-    return fetch(`http://localhost:5000/api/posts/${params.post}`)
-      .then(r => r.json())
-      .then(post => ({[params.post]: post}))
+  static fetchData({dispatch}, {params}) {
+    return dispatch(getPost(params.post));
   }
 
   static propTypes = {
     params: PropTypes.object.isRequired,
-    post: PropTypes.object.isRequired,
+    post: PropTypes.object,
   }
 
   render() {
-    return <Post post={this.props.post} />
+    return this.props.post ? <Post post={this.props.post} /> : null;
   }
 });
 

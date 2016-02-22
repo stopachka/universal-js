@@ -21,6 +21,7 @@
     "react-redux": "4.4.0",
     "react-router": "2.0.0",
     "redux": "3.3.1",
+    "redux-promise": "^0.5.1",
     "webpack": "1.12.13",
     "webpack-dev-middleware": "1.5.1",
     "webpack-hot-middleware": "2.7.1"
