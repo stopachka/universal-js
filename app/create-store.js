@@ -5,9 +5,7 @@ import promiseMiddleware from 'redux-promise';
 // ------------------------------------------------------------
 // Reducers
 
-import POSTS from '../posts';
-
-function posts(posts = POSTS, action) {
+function posts(posts = {}, action) {
   switch (action.type) {
     case GET_POSTS:
       return {...posts, ...action.payload};

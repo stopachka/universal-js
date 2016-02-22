@@ -19,7 +19,7 @@ export function getPost(id) {
 
 // TODO(stopachka) will fix once cfg is figured out
 const API_PATH = process.env.NODE_ENV === 'production'
-  ? 'http://stepanp.com/api'
+  ? 'http://www.stepanp.com/api'
   : 'http://localhost:5000/api'
 ;
 
