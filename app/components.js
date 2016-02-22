@@ -111,6 +111,7 @@ const PostIndex = connect(state => state)(class extends Component {
     return fetch(`http://localhost:5000/api/posts`)
       .then(r => r.json())
       .then(posts => ({posts}))
+    ;
   }
 
   static contextTypes = {

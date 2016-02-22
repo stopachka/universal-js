@@ -41,9 +41,8 @@ app.get('/:params?*', (req, res) => {
     } else if (redirect) {
       res.redirect(302, redirect.pathname + redirect.search);
     } else {
-      // const data = await fetchAllData();
+      const data = await fetchAllData(props);
       const store = createStore();
-
       res.status(200).send(
         templ(
           renderToString(
@@ -51,7 +50,7 @@ app.get('/:params?*', (req, res) => {
               <RouterContext {...props} />
             </Provider>
           ),
-          {},
+          data,
         ),
       );
     }
