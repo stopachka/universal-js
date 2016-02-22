@@ -2,7 +2,6 @@ import _ from 'lodash';
 import {connect} from 'react-redux';
 import {Link, IndexLink} from 'react-router';
 import {getPosts, getPost} from './actions';
-import fetch from 'isomorphic-fetch';
 import marked from 'marked';
 import React, {PropTypes, Component} from 'react';
 
