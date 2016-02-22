@@ -34,25 +34,29 @@ app.get('/favicon.ico', (req, res) => {
   res.status(500).send('uh oh');
 });
 
-app.get('/:params?*', (req, res) => {
+app.get('/:params?*', async function(req, res, next) {
   match({routes, location: req.url}, async function(err, redirect, props) {
     if (err) {
       res.status(500).send(error.messsage);
     } else if (redirect) {
       res.redirect(302, redirect.pathname + redirect.search);
     } else {
-      const store = createStore();
-      const data = await fetchAllData(store, props);
-      res.status(200).send(
-        templ(
-          renderToString(
-            <Provider store={store}>
-              <RouterContext {...props} />
-            </Provider>
+      try {
+        const store = createStore();
+        const data = await fetchAllData(store, props);
+        res.status(200).send(
+          templ(
+            renderToString(
+              <Provider store={store}>
+                <RouterContext {...props} />
+              </Provider>
+            ),
+            store.getState(),
           ),
-          store.getState(),
-        ),
-      );
+        );
+      } catch (e) {
+        next(e);
+      }
     }
   });
 });
