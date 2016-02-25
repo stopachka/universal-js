@@ -130,31 +130,21 @@ const PostIndex = connect(state => state)(class extends Component {
           )}
         </div>
         <div style={PAGINATION_BAR_STYLE}>
-          <button
-            role="button"
+          <Link
             key={`newer${page}`}
             style={PAGINATION_BTN_STYLE}
-            onClick={this._handleNewer}>
+            to={`/page/${page - 1}`}>
               &larr; Newer
-          </button>
-          <button
-            role="button"
+          </Link>
+          <Link
             key={`older-${page}`}
             style={PAGINATION_BTN_STYLE}
-            onClick={this._handleOlder}>
+            to={`/page/${page + 1}`}>
               Older &rarr;
-          </button>
+          </Link>
         </div>
       </div>
     );
-  }
-
-  _handleNewer = () => {
-    this.context.router.push(`/page/${this._page() - 1}`);
-  }
-
-  _handleOlder = () => {
-    this.context.router.push(`/page/${this._page() + 1}`);
   }
 
   _page = () => {
