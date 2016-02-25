@@ -85,6 +85,7 @@ const BTN_RESET = {
 
 const PAGINATION_BTN_STYLE = {
   ...BTN_RESET,
+  textDecoration: 'none',
   color: STOPA_RED,
   fontFamily: DIN_LIGHT,
   fontSize: '15px',
