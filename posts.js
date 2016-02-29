@@ -1265,6 +1265,13 @@ const POSTS = {
     "title": "Be okay with thinking",
     "createdAt": 1454529230000,
     "updatedAt": 1454529230000
+  },
+  "227": {
+    "content": "I reflected recently about the moments where felt the happy. The moments where I saw the largest gain, or experienced person growth. During these moments, the one constant was that I was thinking about something greater than myself -- family, team, friends. \n\n Then I thought of the moments where I was the closest to causing irreparable damage. In these moments I the constant was that I was internally focused, worried about myself, anxious.",
+    "id": 227,
+    "title": "On expanding scope",
+    "createdAt": 1456726168229,
+    "updatedAt": 1456726168229,
   }
 }
 
