@@ -1272,6 +1272,13 @@ const POSTS = {
     "title": "On expanding scope",
     "createdAt": 1456726168229,
     "updatedAt": 1456726168229,
+  },
+  "228": {
+    "content": "I sometimes jokingly say to friends, 'always be on the attack', or 'be like a tiger'. It is in jest, but the root of it is about proactivity. Focus on what you can control",
+    "id": 228,
+    "title": "Proactivity",
+    "createdAt": 1457022474639,
+    "updatedAt": 1457022474639,
   }
 }
 
