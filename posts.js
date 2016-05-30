@@ -1280,6 +1280,13 @@ const POSTS = {
     "createdAt": 1457022474639,
     "updatedAt": 1457022474639,
   }
+  "229": {
+    "content": "When procrastinating, give yourself a hard rule -- you can only produce. No more consumption. You don't have do what you're procrastinating about, but you do need to produce,"
+    "id": 229,
+    "title": "Consumption",
+    "createdAt": 1464627925505,
+    "updatedAt": 1464627925505,
+  }
 }
 
 export default POSTS;
