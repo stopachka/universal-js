@@ -1286,6 +1286,13 @@ const POSTS = {
     "title": "Consumption",
     "createdAt": 1464627925505,
     "updatedAt": 1464627925505,
+  },
+  "230": {
+    content: "When we look deep within ourselves, and re-examine our values, we wake up. We realize that the standards the world sets of us, are lower than the standards our values set for us. No one will complain to you if you are okay at something, but your values demand art. No one will complain to you if you are nice, but your values demand realness.",
+    id: 230,
+    title: "A mismatch in standards",
+    createdAt: 1465056687464,
+    updatedAt: 1465056687464,
   }
 }
 
