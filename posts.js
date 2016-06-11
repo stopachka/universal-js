@@ -1288,11 +1288,18 @@ const POSTS = {
     "updatedAt": 1464627925505,
   },
   "230": {
-    content: "When we look deep within ourselves, and re-examine our values, we wake up. We realize that the standards the world sets of us, are lower than the standards our values set for us. No one will complain to you if you are okay at something, but your values demand art. No one will complain to you if you are nice, but your values demand realness.",
-    id: 230,
-    title: "A mismatch in standards",
-    createdAt: 1465056687464,
-    updatedAt: 1465056687464,
+    "content": "When we look deep within ourselves, and re-examine our values, we wake up. We realize that the standards the world sets of us, are lower than the standards our values set for us. No one will complain to you if you are okay at something, but your values demand art. No one will complain to you if you are nice, but your values demand realness.",
+    "id": 230,
+    "title": "A mismatch in standards",
+    "createdAt": 1465056687464,
+    "updatedAt": 1465056687464,
+  },
+  "231": {
+    "content": "I can be a bit of a loud speaker. Especially when I get on a skype call and have headphones on. One of the things I dread the most was when someone should shush. I would almost react back, and essentially said 'deal with'. This always made me feel quite bad. The reason was that I honestly knew that I was imposing, but I also felt that it was rude of them to talk to me in the way that they did. When I reacted though, it wasn't congruent with the type of person I was, and I woud feel off long after. One time, I a man interrupted me, and I told him, 'I am sorry, though it is outside'. He misheard me, and thought I said 'I am sorry, but we are excited', he laughted and empathized. I realized, this was the secret -- from now on, instead of reacting back, make light of it. It saves face for both of us, and is congruent with who I am. This kind of lesson applies throughout life -- instead of getting angry, taking it lightly, empathize.",
+    "id": 231,
+    "title": "When someone shushes you",
+    "createdAt": 1465688489413,
+    "updatedAt": 1465688489413,
   }
 }
 
