@@ -1300,7 +1300,14 @@ const POSTS = {
     "title": "When someone shushes you",
     "createdAt": 1465688489413,
     "updatedAt": 1465688489413,
-  }
+  },
+  "232": {
+    "content": "When you build a system, you don't just stop when it works once. The complexity comes from building fault tolerance, scale, both in features and usage, as well as reliability. We need to apply to that our lives. I often find myself always at the beginning stage of building a system -- 'Okay, now I will work out every day and wake up at 5am and rainbows all around'. What will happen if I don't? What will happen when it's a bad day?",
+    "id": "232",
+    "title": "Systems",
+    "createdAt": 1466195367536,
+    "updatedAt": 1466195367536,
+  },
 }
 
 export default POSTS;
