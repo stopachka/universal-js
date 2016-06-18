@@ -1308,6 +1308,13 @@ const POSTS = {
     "createdAt": 1466195367536,
     "updatedAt": 1466195367536,
   },
+  "233": {
+    "content": "I notice within myself, that when I am focused on myself, nothing goes the way I want it too. It's easier to become resentful, the world will warp to our problems. The antitode is to look outwards. For what purpose do we work? How can we help others?",
+    "id": "233",
+    "title": "Selfishness",
+    "createdAt": 1466227052106,
+    "updatedAt": 1466227052106,
+  },
 }
 
 export default POSTS;
