@@ -1323,6 +1323,5 @@ const POSTS = {
     "updatedAt": 1467087970941,
   },
 }
-}
 
 export default POSTS;
