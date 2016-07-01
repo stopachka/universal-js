@@ -27,7 +27,6 @@ const NAME_STYLE = {
   fontFamily: DIN_LIGHT,
   textTransform: 'uppercase',
   fontWeight: 'normal',
-  textTransform: 'uppercase',
   letterSpacing: '5px',
   fontSize: '20px',
   color: STOPA_BLACK,
